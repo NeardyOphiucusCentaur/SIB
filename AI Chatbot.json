@@ -1,0 +1,115 @@
+{
+  "name": "AI Chatbot",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "07a5f89a-28bc-4240-9c45-55dff950c126",
+      "name": "When chat message received",
+      "webhookId": "d29c4b8c-3aa2-4355-878a-2e5df3098e45"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Anda adalah seorang Senior Fullstack Developer yang bertugas membantu menjawab pertanyaan terkait pengembangan sistem informasi. Berikan panduan teknis yang akurat mengenai framework Laravel, optimasi query PostgreSQL, serta logika perancangan antarmuka pengguna. Selalu berikan respons yang terstruktur dan sertakan blok kode jika diperlukan"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        176,
+        0
+      ],
+      "id": "263314d9-64af-41b9-b559-f4208ae4cf07",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.6-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        144,
+        192
+      ],
+      "id": "65237371-77fc-49cc-ad48-65b5357a1cab",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "3tpXrlfVWj4dvOCU",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        288,
+        192
+      ],
+      "id": "ee7db9e4-b548-4040-9c4d-be29d656f2b6",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "fd9d0e92-1994-43f5-9e4c-cf1e1e039959",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc96f10ae7dc95d3c138575ba243a0a167923dbcb524841d451aadf9135d5fb3"
+  },
+  "nodeGroups": [],
+  "id": "aiQPVqOvIO8rsAjL",
+  "tags": []
+}
